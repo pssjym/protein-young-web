@@ -1,11 +1,28 @@
 ---
-import Welcome from '../components/Welcome.astro';
+// トップページのAstroコンポーネント
+// ここで必要なコンポーネントをインポートする
+import NewsItem from '../components/NewsItem.astro';
 import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// ここでニュースデータを管理する
+const newsList = [
+	{ date: '2026-02-25', title: '2025年度第一回 蛋白質科学若手研究者交流会を開催しました', link: 'https://fukuda-akiya.github.io/pssjy_web/' },
+	{ date: '2026-03-12', title: '第六回 蛋白質科学若手の会 研究交流会を6/17に開催します' },
+];
 ---
 
-<Layout>
-	<Welcome />
+<main>
+	<section class="hero">
+    	<h1>蛋白質科学 若手の会</h1>
+    </section>
+</main>
+
+<Layout title="ホーム">
+	<h1>最新ニュース</h1>
+	
+	<section class='news-container'>
+		{newsList.map((news) => (
+			<NewsItem date={news.date} title={news.title} link={news.link} />
+		))}
+	</section>
 </Layout>
