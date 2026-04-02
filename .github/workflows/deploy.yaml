@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ] # メインのブランチ名（masterの場合はmasterに変更）
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
@@ -18,7 +18,9 @@ jobs:
         uses: actions/checkout@v4
       - name: Install, build, and upload your site
         uses: withastro/action@v3
-        
+        with:
+          node-version: 22 # 🌟ここを追加：Node.jsのバージョン22を指定します
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
