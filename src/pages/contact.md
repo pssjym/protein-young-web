@@ -15,7 +15,7 @@ title: CONTACT
 * [X（旧Twitter）](https://x.com/pssjym)
 
 
-[トップページへ戻る](/protein-young-web/)
+[トップページへ戻る](/)
 
 </div>
 
