@@ -19,7 +19,7 @@ title: MEMORY | 過去の活動
 * [蛋白質科学会若手の会 第2回研究交流会開催報告](https://www.pssj.jp/newsletters/22/7.html)
 * [第1回蛋白質科学会若手の会研究交流会開催報告](https://www.pssj.jp/newsletters/21/3.html)
 
-[トップページに戻る](/)
+[トップページに戻る](/protein-young-web/)
 </div>
 
 <style>
