@@ -14,13 +14,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository using git
+      - name: Checkout your repository
         uses: actions/checkout@v4
-      - name: Install, build, and upload your site
-        uses: withastro/action@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 22 # 🌟ここを追加：Node.jsのバージョン22を指定します
-          package-manager: npm # 🌟この1行を追加します！
+          node-version: 22
+
+      - name: Install dependencies
+        # 🌟 キャッシュを使わず、Linux用の部品も強制的に入れる設定です
+        run: npm install --include=optional
+
+      - name: Build Astro
+        run: npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
 
   deploy:
     needs: build
