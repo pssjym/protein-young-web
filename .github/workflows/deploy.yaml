@@ -16,12 +16,25 @@ jobs:
     steps:
       - name: Checkout your repository
         uses: actions/checkout@v4
-      
-      - name: Install, build, and upload your site
-        uses: withastro/action@v3
+
+      # withastro/action（お任せパック）を使わず、手動で確実に指示を出します
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 22
-          package-manager: npm
+          # 🌟重要: ここに `cache: 'npm'` を書きません。キャッシュを無視させます。
+
+      - name: Install dependencies
+        # 🌟重要: lockファイルを使わず、毎回必ず最新の必要なものを集めさせます
+        run: npm install
+
+      - name: Build Astro
+        run: npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
 
   deploy:
     needs: build
