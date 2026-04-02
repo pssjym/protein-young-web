@@ -12,6 +12,6 @@
     "astro": "^5.4.1"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.9.6"
+    "@rollup/rollup-linux-x64-gnu": "^4.60.1"
   }
 }

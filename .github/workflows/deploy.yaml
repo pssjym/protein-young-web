@@ -17,22 +17,11 @@ jobs:
       - name: Checkout your repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Install, build, and upload your site
+        uses: withastro/action@v3
         with:
           node-version: 22
-
-      - name: Install dependencies
-        # 🌟 キャッシュを使わず、Linux用の部品も強制的に入れる設定です
-        run: npm install --include=optional
-
-      - name: Build Astro
-        run: npm run build
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
+          package-manager: npm
 
   deploy:
     needs: build
