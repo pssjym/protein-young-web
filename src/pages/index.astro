@@ -1,28 +1,167 @@
 ---
-// トップページのAstroコンポーネント
-// ここで必要なコンポーネントをインポートする
-import NewsItem from '../components/NewsItem.astro';
+// 全体のレイアウトを提供するコンポーネントをインポート
 import Layout from '../layouts/Layout.astro';
-
-// ここでニュースデータを管理する
-const newsList = [
-	{ date: '2026-02-25', title: '2025年度第一回 蛋白質科学若手研究者交流会を開催しました', link: 'https://fukuda-akiya.github.io/pssjy_web/' },
-	{ date: '2026-03-12', title: '第六回 蛋白質科学若手の会 研究交流会を6/17に開催します' },
-];
+// メニューボタンのコンポーネントをインポート
+import MenuButton from '../components/MenuButton.astro';
+// 画像をインポート（必要に応じて使用）
+import { Image } from 'astro:assets';
+import rhodopsinImg from '../assets/rhodopsin_overray.png';
 ---
 
-<main>
-	<section class="hero">
-    	<h1>蛋白質科学 若手の会</h1>
-    </section>
-</main>
+<Layout title="若手の会 | ホーム">
+	<main class="main-container">
+		<!-- タイトル -->
+		<div class="site-title-wrapper">	
+			<h1 class="site-title">
+				<span class="hero-title">PROTEIN SCIENCE</span>
+				<span class="title-sun">FOR YOUNG SCIENTISTS</span>
+			</h1>
+		</div>
 
-<Layout title="ホーム">
-	<h1>最新ニュース</h1>
-	
-	<section class='news-container'>
-		{newsList.map((news) => (
-			<NewsItem date={news.date} title={news.title} link={news.link} />
-		))}
-	</section>
+		<!-- 画像を表示する（必要に応じて） -->
+		<div class="hero-image-wrapper">
+			<Image src={rhodopsinImg}, alt="Rhodopsin" class="hero-image" />
+		</div>
+
+		<div class="menu-wrapper">
+            <div class="stair-item">
+                <MenuButton text="ABOUT" href="/about" gradient="linear-gradient(to right, #001133, #002266)" />
+            </div>
+            <div class="stair-item">
+                <MenuButton text="NEWS" href="/news/news" gradient="linear-gradient(to right, #001a4d, #003399)" />
+            </div>
+            <div class="stair-item">
+                <MenuButton text="MEMORY" href="/memory" gradient="linear-gradient(to right, #002266, #0044cc)" />
+            </div>
+            <div class="stair-item">
+                <MenuButton text="CONTACT" href="/contact" gradient="linear-gradient(to right, #001540, #002b80)" />
+            </div>
+        </div>
+	</main>
 </Layout>
+
+<style>
+	.site-title-wrapper {
+		position: absolute;
+		top: 5vh; /* 画面上部からの距離を調整 */
+		left: 5vw; /* 画面左側からの距離を調整 */
+		z-index: 20; /* メニューや画像より前に表示するためのz-index */
+	}
+
+	.site-title {
+		display: flex;
+		flex-direction: column;
+		margin: 0;
+		transform: skewX(-15deg);
+		line-height: 0.9; 
+	}
+
+	.title-main {
+		font-size: 6vw; /* 画面サイズに合わせて伸縮する巨大フォント */
+		font-weight: 900;
+		font-style: italic;
+		color: #001533;
+		/* 青い発光効果を追加 */
+		light-height: 1;
+		text-shadow: 0 0 30px rgba(0, 210, 255, 0.4);
+	}
+
+	.title-sub {
+		font-size: 2vw;
+        color: #003388;	
+	}
+
+	.main-container {
+		display: flex;
+		/* 画面右側にメニューを配置するためのスタイル */
+		justify-content: center;
+		align-items: center;
+		min-height: 100vh;
+		position: relative;
+		z-index: 10;
+		/* padding-right: 15vw; /* 画面右側に余白を作る */
+	}
+
+	/* --- ここからロドプシン画像のスタイル --- */
+	.hero-image-wrapper {
+		position: absolute;
+		top: 0;
+		left: -5%; /* 少し画面外にはみ出させる */
+		width: 60vw; /* 画面左側の60%を占有 */
+		height: 100%;
+		z-index: 0; /* メニュー（z-index:10）より裏に配置 */
+		pointer-events: none; /* 画像がクリックの邪魔をしないようにする */
+	}
+
+	.hero-image {
+		width: 100%;
+		height: 100%;
+		object-fit: contain; /* 画像の比率を崩さずに収める */
+		
+		/* 背景の青色に馴染ませる */
+		opacity: 0.4; /* 透過度 */
+		mix-blend-mode: luminosity;
+		-webkit-mask-image: linear-gradient(to right, black 50%, transparent 100%);
+		mask-image: linear-gradient(to right, black 50%, transparent 100%);
+	}
+
+	.menu-wrapper {
+		display: flex;
+		flex-direction: column;
+		z-index: 1;
+		gap: 0rem; /* メニューボタンの間隔 */
+	}
+
+	/* 共通設定: 右に押し出す準備 */
+	.stair-item {
+		width: fit-content;
+	}
+
+	/* 1番目から順番に、左側の余白(margin-left)を増やしていく */
+	.stair-item:nth-child(1) { margin-left: 8vw; }
+	.stair-item:nth-child(2) { margin-left: 12vw; }  /* 4vwずつ右へズラす */
+	.stair-item:nth-child(3) { margin-left: 16vw; }
+	.stair-item:nth-child(4) { margin-left: 12vw; }
+	.stair-item:nth-child(5) { margin-left: 8vw; }
+
+	/* --- ここから「ぷかぷか」アニメーションの設計図 --- */
+	@keyframes float-menu {
+		0%, 100% { transform: translateY(0px); }
+		50% { transform: translateY(-12px); } /* 12px上に浮き上がる */
+	}
+
+	@keyframes float-image {
+		0%, 100% { transform: translateY(0px) rotate(0deg); }
+		50% { transform: translateY(-20px) rotate(2deg); } /* 画像は少しだけ回転も加える */
+	}
+	/* --------------------------------------------------- */
+
+	/* --- ロドプシン画像の揺らぎ設定 --- */
+	.hero-image-wrapper {
+		/* (既存の設定はそのまま) */
+		position: absolute;
+		top: 0; left: -5%; width: 60vw; height: 100%; z-index: 0; pointer-events: none;
+		
+		/* 8秒かけてゆっくり揺らす */
+		animation: float-image 8s ease-in-out infinite; 
+	}
+	
+	/* ... (hero-imageやmenu-wrapperの既存の設定はそのまま) ... */
+
+	/* --- メニューの揺らぎ設定 --- */
+	.stair-item {
+		width: fit-content;
+		/* 5秒かけて揺らす（画像とは違うリズムにするのがコツ） */
+		animation: float-menu 5s ease-in-out infinite;
+	}
+
+	/* 【超重要】全部が同時に動くとロボットみたいに不自然になるので、
+	animation-delay（開始を遅らせる）を使って波打つようにズラします！
+	*/
+	.stair-item:nth-child(1) { margin-left: 0vw;  animation-delay: 0s; }
+	.stair-item:nth-child(2) { margin-left: 4vw;  animation-delay: -1s; }
+	.stair-item:nth-child(3) { margin-left: 8vw;  animation-delay: -2s; }
+	.stair-item:nth-child(4) { margin-left: 12vw; animation-delay: -3s; }
+	.stair-item:nth-child(5) { margin-left: 16vw; animation-delay: -4s; }
+
+</style>

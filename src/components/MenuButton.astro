@@ -1,0 +1,67 @@
+---
+interface Props {
+	text: string;
+	href: string;
+	gradient: string; // グラデーションの色を受け取る機能を追加！
+}
+const { text, href, gradient } = Astro.props;
+---
+
+<a href={href} class="p3-menu-button">
+	<span class="hover-bg"></span>
+	<span class="text-inner" style={`background-image: ${gradient};`}>{text}</span>
+</a>
+
+<style>
+	.p3-menu-button {
+		display: block;
+		text-decoration: none;
+		font-size: 5rem;
+		font-weight: 900;
+		font-style: italic;
+		line-height: 0.85;
+		text-transform: uppercase;
+		transform: skewX(-15deg);
+		transition: transform 0.2s ease;
+		width: fit-content;
+		position: relative;
+	}
+
+	.text-inner {
+		display: inline-block;
+		/* ↓これが文字をグラデーションにする魔法のコード */
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: lightskyblue;
+		color: lightskyblue;
+		
+		position: relative;
+		z-index: 2;
+	}
+
+	.p3-menu-button:hover {
+		transform: skewX(-15deg) translateX(20px);
+	}
+
+	/* ホバー時の赤い帯（STATUSの演出） */
+	.hover-bg {
+		position: absolute;
+		left: -10px;
+		bottom: 10px;
+		width: 110%;
+		height: 40%;
+		background-color: red; /* P3Rの赤 */
+		z-index: 1;
+		transform: skewX(15deg) scaleX(0); /* 最初は幅0で見えない */
+		transform-origin: left;
+		transition: transform 0.2s ease;
+	}
+
+	.p3-menu-button:hover .text-inner {
+		-webkit-text-fill-color: black;
+		color: black;
+	}
+
+	.p3-menu-button:hover .hover-bg {
+		transform: skewX(20deg) scaleX(1.5); /* ホバーで赤い帯がシャキッと伸びる */
+	}
+</style>
