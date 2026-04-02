@@ -3,6 +3,6 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://protein-young.com',
+  site: 'https://protein-young-web.com',
   base: '/protein-young-web',
 });
