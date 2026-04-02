@@ -20,6 +20,7 @@ jobs:
         uses: withastro/action@v3
         with:
           node-version: 22 # 🌟ここを追加：Node.jsのバージョン22を指定します
+          package-manager: npm # 🌟この1行を追加します！
 
   deploy:
     needs: build
