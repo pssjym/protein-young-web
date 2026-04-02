@@ -14,13 +14,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository
+      - name: Checkout your repository using git
         uses: actions/checkout@v4
-
       - name: Install, build, and upload your site
         uses: withastro/action@v3
         with:
+          # 🌟 ここが重要！デフォルトの20ではなく22を指定します
           node-version: 22
+          # 🌟 パッケージマネージャーをnpmに固定します
           package-manager: npm
 
   deploy:
