@@ -9,7 +9,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.4.1"
+    "astro": "^5.4.1",
+    "common-ancestor-path": "^2.0.0",
+    "estree-walker": "^3.0.3"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.60.1"
